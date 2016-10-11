@@ -1,0 +1,12 @@
+package home.week1.main.mainHomework.task4;
+
+/**
+ * Created by Дмитрий on 11.10.2016.
+ */
+public class Tulip extends Flower {
+
+    public Tulip(int stemLenght, int freshness, int price) {
+        super(stemLenght, freshness, price);
+    }
+
+}
