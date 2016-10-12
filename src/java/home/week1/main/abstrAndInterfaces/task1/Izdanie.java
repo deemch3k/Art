@@ -5,6 +5,6 @@ package home.week1.main.abstrAndInterfaces.task1;
  */
 public interface Izdanie {
 
-    public void read();
+    void read();
 
 }

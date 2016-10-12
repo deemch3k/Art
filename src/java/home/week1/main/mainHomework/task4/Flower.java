@@ -41,7 +41,7 @@ public class Flower implements Comparable<Flower>{
 
     @Override
     public int compareTo(Flower o) {
-        return getFreshness() - o.getFreshness();
+        return freshness - o.freshness;
     }
 
     @Override
