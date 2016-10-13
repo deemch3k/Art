@@ -32,31 +32,33 @@ public class Group {
         return true;
 
     }
-
+//  TODO: simplify this method 
     public boolean deleteStudent(String surname) {
         int tempIndex = 0;
         int tempCount = 0;
         if (students.length == 0) return false;
-
+        
+        
+//        todo you have already pointer on null(next after last student in array) - it is stCount
         for (int i = 0; i < students.length; i++) {
             if (students[i] != null) {
                 tempCount++;
             }
         }
 
+//        todo can get NullPointerException, correct please
         for (int i = 0; i < students.length; i++) {
             if (students[i].getSurname().equals(surname) && students[i] != null) {
                 students[i] = null;
                 tempIndex = i;
             }
         }
-        Student tempStudent = students[tempCount];
+        students[tempIndex] = students[tempCount];
         students[tempCount] = null;
-        students[tempIndex] = tempStudent;
+//        todo forgot decrement stCount
         return true;
 
     }
-
     public Student findStudent(String surname) {
         for (int i = 0; i < students.length; i++) {
             if (students[i].getSurname().equals(surname)) {
