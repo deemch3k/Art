@@ -11,6 +11,7 @@ public class Car {
     private String color;
     private String marka;
     private Engine engine;
+//todo    better use array
     private Wheel leftBackWheel;
     private Wheel leftFrontWheel;
     private Wheel rightBackWheel;
