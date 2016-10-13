@@ -39,7 +39,7 @@ public class Universty {
 
         return true;
     }
-
+    //  TODO: simplify this method as in Group class
     public boolean deleteGroup(String name){
         int tempIndex = 0;
         int tempCount = 0;
