@@ -5,7 +5,7 @@ package home.week1.main.abstrAndInterfaces.task2;
  */
 public interface Doctor {
 
-    public void heal();
-    public void prescribePills();
+    void heal();
+    void prescribePills();
 
 }
