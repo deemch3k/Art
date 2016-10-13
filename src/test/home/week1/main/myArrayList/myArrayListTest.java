@@ -1,19 +1,20 @@
 package home.week1.main.myArrayList;
 
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Дмитрий on 12.10.2016.
  */
-public class myArrayListTest {
+public class MyArrayListTest {
 
     private static MyArrayList list;
 
-    @BeforeClass
-    public static void initList(){
+//   todo make your test independent from another tests
+    @Before
+    public void init(){
         list = new MyArrayList();
         list.add(new Object());
         list.add(new Object());
@@ -30,7 +31,7 @@ public class myArrayListTest {
     }
     @Test
     public void testRemove() throws Exception {
-        int expected = 4;
+        int expected = 3;
         list.remove(0);
         int actual = list.size();
         assertEquals(expected,actual);
