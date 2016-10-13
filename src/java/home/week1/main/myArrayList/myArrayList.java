@@ -9,16 +9,15 @@ public class MyArrayList {
 
     private static final int DEFAULT_CAPACITY = 10;
     private Object[] objects;
+//    todo default = 0
     private int size;
 
     public MyArrayList() {
         objects = new Object[DEFAULT_CAPACITY];
-        size = 0;
     }
 
     public MyArrayList(int capacity) {
         objects = new Object[capacity];
-        size = 0;
     }
 
     private void growArray(int newSize) {
@@ -32,7 +31,7 @@ public class MyArrayList {
     }
 
     public boolean add(Object o) {
-
+//  todo in JDK ArrayList you could add null, remember it
         if (o == null) return false;
 
         growArray(size + 1);
@@ -42,7 +41,7 @@ public class MyArrayList {
     }
 
     private void checkIndex(int index) {
-        if (index >= size || index < 0)
+        if (index > size || index < 0)
             throw new IndexOutOfBoundsException("Нету такого индекса");
     }
 
@@ -53,7 +52,7 @@ public class MyArrayList {
         int temp = size + 1;
         growArray(temp);
 
-        System.arraycopy(objects, index, objects, index + 1, temp - index);
+        System.arraycopy(objects, index, objects, index + 1, temp - index - 1);
 
         objects[index] = o;
         size = temp;
@@ -71,9 +70,9 @@ public class MyArrayList {
 
         checkIndex(index);
 
-        System.arraycopy(objects, index + 1, objects, index, size - index);
-
-        size--;
+        System.arraycopy(objects, index + 1, objects, index, size - index - 1);
+// todo forgot remove last element after copy
+        objects[--size] = null;
 
         return true;
 
@@ -85,7 +84,7 @@ public class MyArrayList {
 
         checkIndex(index);
 
-        if (objects[index].equals(o)) {
+        if (o.equals(objects[index])) {
             remove(index);
             return true;
         } else {
@@ -106,7 +105,11 @@ public class MyArrayList {
 
     public boolean clear() {
 
-        objects = new Object[DEFAULT_CAPACITY];
+//        objects = new Object[DEFAULT_CAPACITY];
+
+        for (int i = 0; i < size; i++) {
+            objects[i] = null;
+        }
         size = 0;
         return true;
 
@@ -116,8 +119,8 @@ public class MyArrayList {
 
         if (o == null) return false;
 
-        for (int i = 0; i < objects.length; i++) {
-            if (objects[i].equals(o)) {
+        for (int i = 0; i < size; i++) {
+            if (o.equals(objects[i])) {
                 return true;
             }
         }
