@@ -35,14 +35,7 @@ public class Group {
 
     public boolean deleteStudent(String surname) {
         int tempIndex = 0;
-        int tempCount = 0;
-        if (students.length == 0) return false;
-
-        for (int i = 0; i < students.length; i++) {
-            if (students[i] != null) {
-                tempCount++;
-            }
-        }
+        if (students.length == 0 || surname == null) return false;
 
         for (int i = 0; i < students.length; i++) {
             if (students[i].getSurname().equals(surname) && students[i] != null) {
@@ -50,9 +43,10 @@ public class Group {
                 tempIndex = i;
             }
         }
-        Student tempStudent = students[tempCount];
-        students[tempCount] = null;
+        Student tempStudent = students[stCount];
+        students[stCount] = null;
         students[tempIndex] = tempStudent;
+        stCount--;
         return true;
 
     }

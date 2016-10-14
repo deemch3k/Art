@@ -42,14 +42,7 @@ public class Universty {
 
     public boolean deleteGroup(String name){
         int tempIndex = 0;
-        int tempCount = 0;
-        if (groups.length == 0) return false;
-
-        for (int i = 0; i < groups.length; i++) {
-            if (groups[i] != null) {
-                tempCount++;
-            }
-        }
+        if (groups.length == 0 || name == null) return false;
 
         for (int i = 0; i < groups.length; i++) {
             if (groups[i].getName().equals(name) && groups[i] != null) {
@@ -57,9 +50,10 @@ public class Universty {
                 tempIndex = i;
             }
         }
-        Group tempGroup = groups[tempCount];
-        groups[tempCount] = null;
+        Group tempGroup = groups[grCount];
+        groups[grCount] = null;
         groups[tempIndex] = tempGroup;
+        grCount--;
         return true;
     }
 
