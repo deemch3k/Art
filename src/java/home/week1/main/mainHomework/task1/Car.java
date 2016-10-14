@@ -21,6 +21,13 @@ public class Car {
         this.wheels = wheels;
     }
 
+    public Car(String marka, String color, int number) {
+        this.marka = marka;
+        this.color = color;
+        this.number = number;
+    }
+
+
     private void checkWheels() throws WheelIsNotFoundException {
         for (int i = 0; i < wheels.length; i++) {
             if(wheels[i] == null){
@@ -42,17 +49,16 @@ public class Car {
         System.out.println("Машина заправляется");
     }
 
-    public boolean changeWheel(Wheel wheel) throws WheelIsNotFoundException {
-        if ( wheel == null) return false;
-        checkWheels();
-        setWheel(wheel);
+    public boolean changeWheel(int index, Wheel wheel) throws WheelIsNotFoundException {
+        if ( wheel == null || index > wheels.length) return false;
+        wheels[index] = wheel;
         return true;
     }
 
     public boolean setWheel(Wheel wheel){
         if (wheel == null) return false;
         for (int i = 0; i < wheels.length; i++) {
-            if(wheels[i] != null){
+            if(wheels[i] == null){
                 wheels[i] = wheel;
             }
         }
