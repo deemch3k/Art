@@ -11,41 +11,27 @@ public class Car {
     private String color;
     private String marka;
     private Engine engine;
-//todo    better use array
-    private Wheel leftBackWheel;
-    private Wheel leftFrontWheel;
-    private Wheel rightBackWheel;
-    private Wheel rightFrontWheel;
+    private Wheel[] wheels;
 
-    public Car(int number, String color, String marka, Engine engine, Wheel leftBackWheel,
-               Wheel rightBackWheel, Wheel leftFrontWheel, Wheel rightFrontWheel) {
+    public Car(int number, String color, String marka, Engine engine, Wheel[] wheels) {
         this.number = number;
         this.color = color;
         this.marka = marka;
         this.engine = engine;
-        this.rightBackWheel = rightBackWheel;
-        this.rightFrontWheel = rightFrontWheel;
-        this.leftBackWheel = leftBackWheel;
-        this.leftFrontWheel = leftFrontWheel;
+        this.wheels = wheels;
     }
 
-    public void run() {
-        if (engine == null) {
-            System.out.println("У вашей машины нету двигателя");
+    private void checkWheels() throws WheelIsNotFoundException {
+        for (int i = 0; i < wheels.length; i++) {
+            if(wheels[i] == null){
+                throw new WheelIsNotFoundException();
+            }
         }
-        if (leftBackWheel == null) {
-            System.out.println("У вашей машины нету левого заднего колеса");
-        }
-        if (leftFrontWheel == null) {
-            System.out.println("У вашей машины нету левого переднего колеса");
-        }
-        if (rightFrontWheel == null) {
-            System.out.println("У вашей машины нету правого переднего колеса");
-        }
-        if (rightBackWheel == null) {
-            System.out.println("У вашей машины нету правого заднего колеса");
-        }
-        System.out.println("Ваша машина поехала");
+    }
+
+    public void run() throws WheelIsNotFoundException {
+        checkWheels();
+        System.out.println("Машина поехала...");
     }
 
     public void printMarka(){
@@ -56,44 +42,37 @@ public class Car {
         System.out.println("Машина заправляется");
     }
 
-    public boolean changeWheel(Wheel wheel){
-        System.out.println("Какое колесо вы хотите поменять ? \n" +
-                "1 - Left back wheel\n" +
-                "2 - Left front wheel\n" +
-                "3 - Right back wheel\n" +
-                "4 - Right front wheel");
-
-        Scanner sc = new Scanner(System.in);
-        int choise = sc.nextInt();
-        switch (choise){
-            case 1: leftBackWheel = wheel;
-            case 2: leftFrontWheel = wheel;
-            case 3: rightBackWheel = wheel;
-            case 4: rightFrontWheel = wheel;
-        }
-
+    public boolean changeWheel(Wheel wheel) throws WheelIsNotFoundException {
+        if ( wheel == null) return false;
+        checkWheels();
+        setWheel(wheel);
         return true;
+    }
 
+    public boolean setWheel(Wheel wheel){
+        if (wheel == null) return false;
+        for (int i = 0; i < wheels.length; i++) {
+            if(wheels[i] != null){
+                wheels[i] = wheel;
+            }
+        }
+        return true;
+    }
+
+    public void setWheels(Wheel[] wheels){
+        this.wheels = wheels;
+    }
+
+    public void setEngine(Engine engine){
+        if(engine == null){
+            this.engine = engine;
+        } else {
+            System.out.println("Двигатель уже установлен");
+        }
     }
 
     public Engine getEngine() {
         return engine;
-    }
-
-    public Wheel getLeftBackWheel() {
-        return leftBackWheel;
-    }
-
-    public Wheel getLeftFrontWheel() {
-        return leftFrontWheel;
-    }
-
-    public Wheel getRightBackWheel() {
-        return rightBackWheel;
-    }
-
-    public Wheel getRightFrontWheel() {
-        return rightFrontWheel;
     }
 
     public String getColor() {

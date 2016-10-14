@@ -39,7 +39,6 @@ public class Universty {
 
         return true;
     }
-    //  TODO: simplify this method as in Group class
     public boolean deleteGroup(String name){
         int tempIndex = 0;
         if (groups.length == 0 || name == null) return false;

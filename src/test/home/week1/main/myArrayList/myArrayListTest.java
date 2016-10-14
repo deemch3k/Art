@@ -12,7 +12,6 @@ public class MyArrayListTest {
 
     private static MyArrayList list;
 
-//   todo make your test independent from another tests
     @Before
     public void init(){
         list = new MyArrayList();

@@ -9,8 +9,7 @@ public class MyArrayList {
 
     private static final int DEFAULT_CAPACITY = 10;
     private Object[] objects;
-//    todo default = 0
-    private int size;
+    private int size = 0;
 
     public MyArrayList() {
         objects = new Object[DEFAULT_CAPACITY];
@@ -31,9 +30,6 @@ public class MyArrayList {
     }
 
     public boolean add(Object o) {
-//  todo in JDK ArrayList you could add null, remember it
-        if (o == null) return false;
-
         growArray(size + 1);
         objects[size++] = o;
         return true;
@@ -46,8 +42,6 @@ public class MyArrayList {
     }
 
     public boolean add(int index, Object o) {
-        if (o == null) return false;
-
         checkIndex(index);
         int temp = size + 1;
         growArray(temp);
@@ -129,5 +123,10 @@ public class MyArrayList {
 
     public int size() {
         return size;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(objects);
     }
 }
