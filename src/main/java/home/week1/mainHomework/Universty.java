@@ -40,19 +40,17 @@ public class Universty {
         return true;
     }
     public boolean deleteGroup(String name){
-        int tempIndex = 0;
+        int groupIndex = 0;
         if (groups.length == 0 || name == null) return false;
 
         for (int i = 0; i < groups.length; i++) {
-            if (groups[i].getName().equals(name) && groups[i] != null) {
+            if (groups[i] != null && groups[i].getName().equals(name)) {
                 groups[i] = null;
-                tempIndex = i;
+                groupIndex = i;
             }
         }
-        Group tempGroup = groups[grCount];
-        groups[grCount] = null;
-        groups[tempIndex] = tempGroup;
-        grCount--;
+        groups[groupIndex] = groups[grCount - 1];
+        groups[--grCount] = null;
         return true;
     }
 

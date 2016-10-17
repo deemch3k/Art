@@ -33,7 +33,7 @@ public class Group {
 
     }
 
-    public boolean deleteStudent(String surname) {
+    /*public boolean deleteStudent(String surname) {
         int tempIndex = 0;
         int tempCount = 0;
         if (students.length == 0) return false;
@@ -53,6 +53,21 @@ public class Group {
         Student tempStudent = students[tempCount];
         students[tempCount] = null;
         students[tempIndex] = tempStudent;
+        return true;
+
+    }*/
+    public boolean deleteStudent(String surname) {
+        int studentIndex = 0;
+        if (students.length == 0) return false;
+
+        for (int i = 0; i < students.length; i++) {
+            if (students[i] != null && surname.equals(students[i].getSurname())) {
+                students[i] = null;
+                studentIndex = i;
+            }
+        }
+        students[studentIndex] = students[stCount - 1];
+        students[--stCount] = null;
         return true;
 
     }
