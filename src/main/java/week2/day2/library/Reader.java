@@ -47,8 +47,8 @@ public class Reader {
 
         if (issues == null || isBlackList()) return false;
 
-        if (issues.size() < MAX_AMOUNT_OF_ISSUES || issues.size() + this.issues.size() < MAX_AMOUNT_OF_ISSUES) {
-            this.issues = issues;
+        if (issues.size() + this.issues.size() < MAX_AMOUNT_OF_ISSUES) {
+            this.issues.addAll(issues);
         } else {
             throw new MoreThanMaxAmountOfPeriodicalIssuesException();
         }

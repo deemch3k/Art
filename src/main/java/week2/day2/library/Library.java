@@ -9,6 +9,7 @@ import week2.day2.library.exceptions.IncorrectCriterionSortException;
 import week2.day2.library.exceptions.NameIsNullException;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * Created by Дмитрий on 16.10.2016.
@@ -34,13 +35,13 @@ public class Library {
 
         switch (criterionSort) {
             case "name":
-                sortByNameIssues(issues);
+                sort(issues, new NamePeriodicalIssueComparator());
                 break;
             case "year":
-                sortByYear(issues);
+                sort(issues, new YearPeriodicalIssueComparator());
                 break;
             case "author":
-                sortByAuthor(issues);
+                sort(issues, new AuthorPeriodicalIssueComparator());
                 break;
             default:
                 throw new IncorrectCriterionSortException();
@@ -49,20 +50,12 @@ public class Library {
         return issues;
     }
 
-    private void sortByAuthor(ArrayList<PeriodicalIssue> issues) {
-        issues.sort(new AuthorPeriodicalIssueComparator());
-    }
-
-    private void sortByYear(ArrayList<PeriodicalIssue> issues) {
-        issues.sort(new YearPeriodicalIssueComparator());
-    }
-
-    private void sortByNameIssues(ArrayList<PeriodicalIssue> issues) {
-        issues.sort(new NamePeriodicalIssueComparator());
+    private void sort(ArrayList<PeriodicalIssue> issues, Comparator comparator) {
+        issues.sort(comparator);
     }
 
     public boolean addReader(Reader reader) {
-        if (reader == null || reader.isBlackList()) return false;
+        if (reader == null || readers.contains(reader) || reader.isBlackList()) return false;
 
         return readers.add(reader);
     }
@@ -85,7 +78,7 @@ public class Library {
             res.addAll(readers.get(i).getIssues());
         }
 
-        sortByNameIssues(res);
+        sort(res, new NamePeriodicalIssueComparator());
 
         return res;
     }
@@ -107,7 +100,7 @@ public class Library {
                 res.add(issue);
             }
 
-        sortByNameIssues(res);
+        sort(res, new NamePeriodicalIssueComparator());
 
         return res;
     }
@@ -122,7 +115,7 @@ public class Library {
                 res.add(issue);
             }
 
-        sortByAuthor(res);
+        sort(res, new AuthorPeriodicalIssueComparator());
 
         return res;
     }
@@ -136,7 +129,7 @@ public class Library {
                 res.add(issue);
             }
 
-        sortByNameIssues(res);
+        sort(res, new NamePeriodicalIssueComparator());
 
         return res;
 
