@@ -4,12 +4,11 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import week2.day2.library.enums.Genre;
 import week2.day2.library.exceptions.AuthorIsNullException;
 import week2.day2.library.exceptions.IncorrectCriterionSortException;
 import week2.day2.library.exceptions.MoreThanMaxAmountOfPeriodicalIssuesException;
 import week2.day2.library.exceptions.NameIsNullException;
-
-import java.time.Period;
 
 /**
  * Created by Дмитрий on 17.10.2016.
@@ -57,10 +56,10 @@ public class LibraryTest {
     @Test
     public void getIssuesViaSortByNameTest() throws IncorrectCriterionSortException {
 
-        PeriodicalIssue expected = new Book("AName", "SomeAuthorName", 1999);
+        PeriodicalIssue expected = new Book("AName", "SomeAuthorName", 1999, Genre.ACTION);
 
-        library.addPeriodicalIssue(new Book("CName", "SomeAuthorName", 1999));
-        library.addPeriodicalIssue(new Encyclopedia("BName", "SomeAuthorName", 1999));
+        library.addPeriodicalIssue(new Book("CName", "SomeAuthorName", 1999,Genre.COMEDY));
+        library.addPeriodicalIssue(new Encyclopedia("BName", "SomeAuthorName", 1999, Genre.SCIENCE));
         library.addPeriodicalIssue(expected);
 
         PeriodicalIssue actual = library.getIssues("name").get(0);
@@ -72,10 +71,10 @@ public class LibraryTest {
     @Test
     public void getIssuesViaSortByYearTest() throws IncorrectCriterionSortException {
 
-        PeriodicalIssue expected = new Encyclopedia("SomeName", "SomeAuthorName", 1009);
+        PeriodicalIssue expected = new Encyclopedia("SomeName", "SomeAuthorName", 1009, Genre.SCIENCE);
 
-        library.addPeriodicalIssue(new Book("SomeName1", "SomeAuthorName1", 2001));
-        library.addPeriodicalIssue(new Journal("SomeName2", "SomeAuthorName2", 1999));
+        library.addPeriodicalIssue(new Book("SomeName1", "SomeAuthorName1", 2001, Genre.DETECTIVE));
+        library.addPeriodicalIssue(new Journal("SomeName2", "SomeAuthorName2", 1999, Genre.FASHION));
         library.addPeriodicalIssue(expected);
 
         PeriodicalIssue actual = library.getIssues("year").get(0);
@@ -87,10 +86,10 @@ public class LibraryTest {
     @Test
     public void getIssuesViaSortByAuthorNameTest() throws IncorrectCriterionSortException {
 
-        PeriodicalIssue expected = new Journal("SomeName", "AAuthorName", 1999);
+        PeriodicalIssue expected = new Journal("SomeName", "AAuthorName", 1999, Genre.FASHION);
 
-        library.addPeriodicalIssue(new Book("SomeName", "BAuthorName", 1992));
-        library.addPeriodicalIssue(new Book("SomeName", "CAuthorName", 1962));
+        library.addPeriodicalIssue(new Book("SomeName", "BAuthorName", 1992, Genre.DETECTIVE));
+        library.addPeriodicalIssue(new Book("SomeName", "CAuthorName", 1962, Genre.ACTION));
         library.addPeriodicalIssue(expected);
 
         PeriodicalIssue actual = library.getIssues("author").get(0);
@@ -130,9 +129,9 @@ public class LibraryTest {
     @Test
     public void addPeriodicalIssueTest() {
 
-        library.addPeriodicalIssue(new Journal("SomeName", "SomeAuthorName", 1999));
-        library.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1999));
-        library.addPeriodicalIssue(new Encyclopedia("SomeName", "SomeAuthorName", 1999));
+        library.addPeriodicalIssue(new Journal("SomeName", "SomeAuthorName", 1999, Genre.FASHION));
+        library.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1999, Genre.ACTION));
+        library.addPeriodicalIssue(new Encyclopedia("SomeName", "SomeAuthorName", 1999, Genre.SCIENCE));
 
         int expected = 3;
         int actual = library.amountOfPeriodicalIssues();
@@ -154,9 +153,9 @@ public class LibraryTest {
         Reader r1 = new Reader("Kevin");
         Reader r2 = new Reader("Mike");
 
-        r1.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1099));
-        r2.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1099));
-        r2.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1099));
+        r1.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1099, Genre.ACTION));
+        r2.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1099, Genre.ACTION));
+        r2.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1099, Genre.ACTION));
 
         library.addReader(r1);
         library.addReader(r2);
@@ -171,9 +170,9 @@ public class LibraryTest {
     @Test
     public void getIssuesByAuthorTest() throws AuthorIsNullException {
 
-        library.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1299));
-        library.addPeriodicalIssue(new Book("SomeName", "Dima", 2006));
-        library.addPeriodicalIssue(new Journal("SomeName", "Alex", 2016));
+        library.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1299, Genre.ACTION));
+        library.addPeriodicalIssue(new Book("SomeName", "Dima", 2006, Genre.ACTION));
+        library.addPeriodicalIssue(new Journal("SomeName", "Alex", 2016, Genre.FASHION));
 
         int actual = library.getPeriodicalIssuesByAuthor("Alex").size();
         int expected = 1;
@@ -191,9 +190,9 @@ public class LibraryTest {
     @Test
     public void getPeriodicalIssueByNameTest() throws NameIsNullException {
 
-        library.addPeriodicalIssue(new Book("SomeName1", "SomeAuthorName", 1899));
-        library.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1899));
-        library.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1899));
+        library.addPeriodicalIssue(new Book("SomeName1", "SomeAuthorName", 1899, Genre.ACTION));
+        library.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1899, Genre.ACTION));
+        library.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1899, Genre.ACTION));
 
         int expected = 2;
         int actual = library.getPeriodicalIssuesByName("SomeName").size();
@@ -212,9 +211,9 @@ public class LibraryTest {
     @Test
     public void getPeriodicalIssueByYearTest() {
 
-        library.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1799));
-        library.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1699));
-        library.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1799));
+        library.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1799, Genre.ACTION));
+        library.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName1", 1699, Genre.ACTION));
+        library.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName2", 1799, Genre.ACTION));
 
         int expected = 2;
         int actual = library.getPeriodicalIssuesByYear(1799).size();
@@ -223,14 +222,16 @@ public class LibraryTest {
 
     }
 
+
+
     @Test
     public void getIssuesByYearTest() {
 
-        PeriodicalIssue expected = new Book("SomeName", "SomeAuthorName", 1299);
+        PeriodicalIssue expected = new Book("SomeName", "SomeAuthorName", 1299, Genre.ACTION);
 
-        library.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1800));
+        library.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1800, Genre.ACTION));
         library.addPeriodicalIssue(expected);
-        library.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1899));
+        library.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1899, Genre.ACTION));
 
         PeriodicalIssue actual = library.getPeriodicalIssuesByYear(1299).get(0);
 
@@ -241,13 +242,13 @@ public class LibraryTest {
     @Test
     public void getPeriodicalIssuesByYearViaSortTest(){
 
-        PeriodicalIssue expected = new Book("BSomeName", "SomeAuthorName", 1800);
+        PeriodicalIssue expected = new Book("BSomeName", "SomeAuthorName", 1800, Genre.ACTION);
 
-        library.addPeriodicalIssue(new Book("CSomeName", "SomeAuthorName", 1800));
+        library.addPeriodicalIssue(new Book("CSomeName", "SomeAuthorName", 1800, Genre.ACTION));
         library.addPeriodicalIssue(expected);
-        library.addPeriodicalIssue(new Book("ASomeName", "SomeAuthorName", 1800));
-        library.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1899));
-        library.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1119));
+        library.addPeriodicalIssue(new Book("ASomeName", "SomeAuthorName", 1800, Genre.ACTION));
+        library.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1899, Genre.ACTION));
+        library.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1119, Genre.ACTION));
 
         PeriodicalIssue actual = library.getPeriodicalIssuesByYear(1800).get(1);
 

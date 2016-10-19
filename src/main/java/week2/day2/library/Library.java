@@ -64,7 +64,8 @@ public class Library {
         if (issue == null) return false;
 
         return issues.add(issue);
-    }
+
+        }
 
     private void sortByNameReaders() {
         readers.sort(new NameReaderComparator());

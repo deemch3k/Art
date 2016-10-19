@@ -1,6 +1,7 @@
 package week2.day2.library;
 
 import org.junit.*;
+import week2.day2.library.enums.Genre;
 import week2.day2.library.exceptions.MoreThanMaxAmountOfPeriodicalIssuesException;
 
 import java.util.ArrayList;
@@ -15,13 +16,13 @@ public class ReaderTest {
 
 
     @Before
-    public void init(){
+    public void init() {
         issues = new ArrayList<>();
         reader = new Reader("Dima");
     }
 
     @After
-    public void tearDown(){
+    public void tearDown() {
         issues = null;
         reader = null;
     }
@@ -29,30 +30,30 @@ public class ReaderTest {
     @Test
     public void getIssuesTest() throws Exception {
 
-        issues.add(new Book("Name","Artur",1999));
-        issues.add(new Encyclopedia("Name2","Nikolay",1299));
+        issues.add(new Book("Name", "Artur", 1999, Genre.ACTION));
+        issues.add(new Encyclopedia("Name2", "Nikolay", 1299, Genre.SCIENCE));
 
         reader.addPeriodicalIssues(issues);
 
         String actual = "Name";
         String expected = reader.getIssues().get(0).getName();
 
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals(expected, actual);
     }
 
     @Test(expected = MoreThanMaxAmountOfPeriodicalIssuesException.class)
     public void getIssuesIfMaxCountOfIssuesMoreThanAllowed() throws MoreThanMaxAmountOfPeriodicalIssuesException {
 
-        issues.add(new Book("Name","Artur",1999));
-        issues.add(new Encyclopedia("Name2","Nikolay",1299));
-        issues.add(new Encyclopedia("Name3","Nikolay",1279));
-        issues.add(new Encyclopedia("Name4","Nikolay",1259));
+        issues.add(new Book("Name", "Artur", 1999, Genre.ACTION));
+        issues.add(new Encyclopedia("Name2", "Nikolay", 1299, Genre.SCIENCE));
+        issues.add(new Encyclopedia("Name3", "Nikolay", 1279, Genre.SCIENCE));
+        issues.add(new Encyclopedia("Name4", "Nikolay", 1259, Genre.SCIENCE));
 
         reader.addPeriodicalIssues(issues);
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void getIssuesIfIssuesIsEmpty(){
+    public void getIssuesIfIssuesIsEmpty() {
 
         reader.getIssues().get(0);
 
@@ -62,48 +63,47 @@ public class ReaderTest {
     @Test
     public void addPeriodicalIssueTest() throws Exception {
 
-        reader.addPeriodicalIssue(new Book("SomeName","Kevin",2011));
-        reader.addPeriodicalIssue(new Journal("SomeName1","John",2001));
+        reader.addPeriodicalIssue(new Book("SomeName", "Kevin", 2011, Genre.SCIENCE));
+        reader.addPeriodicalIssue(new Journal("SomeName1", "John", 2001, Genre.SCIENCE));
 
         int actual = reader.getAmountOfIssues();
         int expected = 2;
 
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals(expected, actual);
 
     }
 
     @Test(expected = MoreThanMaxAmountOfPeriodicalIssuesException.class)
     public void addPeriodicalIssueIfIssuesMoreThanAllowed() throws MoreThanMaxAmountOfPeriodicalIssuesException {
 
-        reader.addPeriodicalIssue(new Book("SomeName","SomeAuthorName",1999));
-        reader.addPeriodicalIssue(new Book("SomeName","SomeAuthorName",1999));
-        reader.addPeriodicalIssue(new Book("SomeName","SomeAuthorName",1999));
-        reader.addPeriodicalIssue(new Book("SomeName","SomeAuthorName",1999));
+        reader.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1999, Genre.SCIENCE));
+        reader.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1999, Genre.SCIENCE));
+        reader.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1999, Genre.SCIENCE));
+        reader.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1999, Genre.SCIENCE));
 
     }
 
     @Test
     public void getCountOfIssuesTest() throws Exception {
 
-        reader.addPeriodicalIssue(new Encyclopedia("SomeName","SomeAuthorName",1999));
-        reader.addPeriodicalIssue(new Encyclopedia("SomeName","SomeAuthorName",1999));
+        reader.addPeriodicalIssue(new Encyclopedia("SomeName", "SomeAuthorName", 1999, Genre.SCIENCE));
+        reader.addPeriodicalIssue(new Encyclopedia("SomeName", "SomeAuthorName", 1999, Genre.SCIENCE));
 
         int expected = 2;
         int actual = reader.getAmountOfIssues();
 
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals(expected, actual);
 
     }
 
     @Test
-    public void getCountOfIssuesIfCountEqualsZero(){
+    public void getCountOfIssuesIfCountEqualsZero() {
 
         int actual = reader.getAmountOfIssues();
         int expected = 0;
 
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals(expected, actual);
     }
-
 
 
     @Test
@@ -120,7 +120,7 @@ public class ReaderTest {
 
         reader.setBlackList(true);
 
-        Assert.assertFalse(reader.addPeriodicalIssue(new Book("SomeName","SomeAuthorName",1022)));
+        Assert.assertFalse(reader.addPeriodicalIssue(new Book("SomeName", "SomeAuthorName", 1022, Genre.SCIENCE)));
 
     }
 }
