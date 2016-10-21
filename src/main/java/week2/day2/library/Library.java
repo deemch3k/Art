@@ -85,6 +85,9 @@ public class Library {
     }
 
     public boolean setBlackList(Reader reader) {
+
+        if(reader == null) return false;
+
         reader.setBlackList(true);
         return true;
     }
