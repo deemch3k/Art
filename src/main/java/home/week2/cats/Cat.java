@@ -10,12 +10,13 @@ public class Cat {
     public static ArrayList<Cat> cats = new ArrayList<>();
     public String name;
 
+
     public Cat(String name){
         this.name = name;
+        cats.add(this);
     }
 
     public String getName() {
         return name;
     }
-
 }
