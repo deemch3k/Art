@@ -19,4 +19,11 @@ public class Cat {
     public String getName() {
         return name;
     }
+
+    public static void printCats(){
+        for (int i = 0; i < Cat.cats.size(); i++) {
+            System.out.print(Cat.cats.get(i).getName() + " ");
+        }
+    }
+
 }

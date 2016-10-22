@@ -7,18 +7,16 @@ public class CatTest {
 
     public static void main(String[] args) {
         for (int i = 0; i < 10; i++) {
-            Cat.cats.add(new Cat("SomeName"));
+            new Cat("SomeName");
         }
 
-        Cat.cats.add(new Cat("Name"));
-        printCats();
+        new Cat("Name");
+
+        Cat.printCats();
 
     }
 
-    public static void printCats(){
-        for (int i = 0; i < Cat.cats.size(); i++) {
-            System.out.print(Cat.cats.get(i).getName() + " ");
-        }
-    }
+
+
 
 }
