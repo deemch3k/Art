@@ -4,43 +4,50 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import week2.day2.library.config.ApplicationContext;
+import week2.day2.library.controller.Library;
 import week2.day2.library.enums.Genre;
 import week2.day2.library.exceptions.AuthorIsNullException;
 import week2.day2.library.exceptions.IncorrectCriterionSortException;
 import week2.day2.library.exceptions.MoreThanMaxAmountOfPeriodicalIssuesException;
 import week2.day2.library.exceptions.NameIsNullException;
+import week2.day2.library.model.*;
 
 /**
  * Created by Дмитрий on 17.10.2016.
  */
 public class LibraryTest {
 
+    private static ApplicationContext context;
+    private static Library library;
+
     @Before
     public void init() {
 
-        library = new Library("National Library #1");
+        context = ApplicationContext.getInstance();
+        library = new Library("");
 
     }
-
-    private static Library library;
 
     @After
     public void tearDown() {
 
+        context = null;
         library = null;
 
-    }
 
+    }
 
     @Test
     public void getReadersTest() {
 
         Reader andry = new Reader("Andry");
 
-        library.addReader(new Reader("Kevin"));
-        library.addReader(andry);
+        context.getReaderDAO().addReader(new Reader("Kev"));
 
-        Reader actual = library.getReaders().get(0);
+        context.getReaderDAO().addReader(andry);
+
+        Reader actual = context.getReaderDAO().getReaders().get(0);
 
         Assert.assertEquals(andry, actual);
 
@@ -49,7 +56,7 @@ public class LibraryTest {
     @Test(expected = IndexOutOfBoundsException.class)
     public void getReadersIfListIsEmpty() {
 
-        library.getReaders().get(0);
+        context.getReaderDAO().getReaders().get(0);
 
     }
 
@@ -58,9 +65,9 @@ public class LibraryTest {
 
         PeriodicalIssue expected = new Book("AName", "SomeAuthorName", 1999, Genre.ACTION);
 
-        library.addPeriodicalIssue(new Book("CName", "SomeAuthorName", 1999,Genre.COMEDY));
-        library.addPeriodicalIssue(new Encyclopedia("BName", "SomeAuthorName", 1999, Genre.SCIENCE));
-        library.addPeriodicalIssue(expected);
+        context.getIssueDAO().addIssue(new Book("CName", "SomeAuthorName", 1999,Genre.COMEDY));
+        context.getIssueDAO().addIssue(new Encyclopedia("BName", "SomeAuthorName", 1999, Genre.SCIENCE));
+        context.getIssueDAO().addIssue(expected);
 
         PeriodicalIssue actual = library.getIssues("name").get(0);
 

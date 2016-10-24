@@ -1,6 +1,6 @@
 package week2.day2.library.comparators;
 
-import week2.day2.library.PeriodicalIssue;
+import week2.day2.library.model.PeriodicalIssue;
 
 import java.util.Comparator;
 

@@ -3,6 +3,7 @@ package week2.day2.library;
 import org.junit.*;
 import week2.day2.library.enums.Genre;
 import week2.day2.library.exceptions.MoreThanMaxAmountOfPeriodicalIssuesException;
+import week2.day2.library.model.*;
 
 import java.util.ArrayList;
 

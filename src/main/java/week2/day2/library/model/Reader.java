@@ -1,4 +1,4 @@
-package week2.day2.library;
+package week2.day2.library.model;
 
 import week2.day2.library.comparators.NamePeriodicalIssueComparator;
 import week2.day2.library.exceptions.MoreThanMaxAmountOfPeriodicalIssuesException;

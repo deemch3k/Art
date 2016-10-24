@@ -1,4 +1,4 @@
-package week2.day2.library;
+package week2.day2.library.model;
 
 import week2.day2.library.enums.Genre;
 

@@ -1,12 +1,21 @@
-package week2.day2.library;
+package week2.day2.library.controller;
 
+import javafx.application.Application;
 import week2.day2.library.comparators.AuthorPeriodicalIssueComparator;
 import week2.day2.library.comparators.NamePeriodicalIssueComparator;
 import week2.day2.library.comparators.NameReaderComparator;
 import week2.day2.library.comparators.YearPeriodicalIssueComparator;
+import week2.day2.library.config.ApplicationContext;
+import week2.day2.library.dao.IssueDAO;
+import week2.day2.library.dao.ReaderDAO;
+import week2.day2.library.database.LibraryDB;
+import week2.day2.library.enums.Genre;
 import week2.day2.library.exceptions.AuthorIsNullException;
 import week2.day2.library.exceptions.IncorrectCriterionSortException;
+import week2.day2.library.exceptions.MoreThanMaxAmountOfPeriodicalIssuesException;
 import week2.day2.library.exceptions.NameIsNullException;
+import week2.day2.library.model.PeriodicalIssue;
+import week2.day2.library.model.Reader;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -16,67 +25,73 @@ import java.util.Comparator;
  */
 public class Library {
 
+    private ApplicationContext context;
+
     private String name;
-    private ArrayList<Reader> readers;
-    private ArrayList<PeriodicalIssue> issues;
 
     public Library(String name) {
+
+        context = ApplicationContext.getInstance();
         this.name = name;
-        readers = new ArrayList<>();
-        issues = new ArrayList<>();
+
     }
 
     public ArrayList<Reader> getReaders() {
+
         sortByNameReaders();
-        return readers;
+        return context.getReaderDAO().getReaders();
+
     }
 
     public ArrayList<PeriodicalIssue> getIssues(String criterionSort) throws IncorrectCriterionSortException {
 
+        ArrayList<PeriodicalIssue> temp = context.getIssueDAO().getIssues();
+
         switch (criterionSort) {
             case "name":
-                sort(issues, new NamePeriodicalIssueComparator());
+                sort(temp, new NamePeriodicalIssueComparator());
                 break;
             case "year":
-                sort(issues, new YearPeriodicalIssueComparator());
+                sort(temp, new YearPeriodicalIssueComparator());
                 break;
             case "author":
-                sort(issues, new AuthorPeriodicalIssueComparator());
+                sort(temp, new AuthorPeriodicalIssueComparator());
                 break;
             default:
                 throw new IncorrectCriterionSortException();
         }
 
-        return issues;
+        return temp;
     }
 
     private void sort(ArrayList<PeriodicalIssue> issues, Comparator comparator) {
+
         issues.sort(comparator);
+
     }
 
     public boolean addReader(Reader reader) {
-        if (reader == null || readers.contains(reader) || reader.isBlackList()) return false;
+        if (reader == null || context.getReaderDAO().findReader(reader.getName()) || reader.isBlackList()) return false;
 
-        return readers.add(reader);
+        return context.getReaderDAO().addReader(reader);
     }
 
     public boolean addPeriodicalIssue(PeriodicalIssue issue) {
         if (issue == null) return false;
 
-        return issues.add(issue);
-
-        }
+        return context.getIssueDAO().addIssue(issue);
+    }
 
     private void sortByNameReaders() {
-        readers.sort(new NameReaderComparator());
+        context.getReaderDAO().getReaders().sort(new NameReaderComparator());
     }
 
     public ArrayList<PeriodicalIssue> getAllIssuesThatHaveReaders() {
 
         ArrayList<PeriodicalIssue> res = new ArrayList<>();
 
-        for (int i = 0; i < readers.size(); i++) {
-            res.addAll(readers.get(i).getIssues());
+        for (int i = 0; i < context.getReaderDAO().getReaders().size(); i++) {
+            res.addAll(context.getReaderDAO().getReaders().get(i).getIssues());
         }
 
         sort(res, new NamePeriodicalIssueComparator());
@@ -86,7 +101,7 @@ public class Library {
 
     public boolean setBlackList(Reader reader) {
 
-        if(reader == null) return false;
+        if (reader == null) return false;
 
         reader.setBlackList(true);
         return true;
@@ -99,7 +114,7 @@ public class Library {
 
         ArrayList<PeriodicalIssue> res = new ArrayList<>();
 
-        for (PeriodicalIssue issue : issues)
+        for (PeriodicalIssue issue : context.getIssueDAO().getIssues())
             if (issue.getAuthorName().equals(authorName)) {
                 res.add(issue);
             }
@@ -114,7 +129,7 @@ public class Library {
         if (name == null) throw new NameIsNullException();
         ArrayList<PeriodicalIssue> res = new ArrayList<>();
 
-        for (PeriodicalIssue issue : issues)
+        for (PeriodicalIssue issue : context.getIssueDAO().getIssues())
             if (issue.getName().equals(name)) {
                 res.add(issue);
             }
@@ -128,7 +143,7 @@ public class Library {
 
         ArrayList<PeriodicalIssue> res = new ArrayList<>();
 
-        for (PeriodicalIssue issue : issues)
+        for (PeriodicalIssue issue : context.getIssueDAO().getIssues())
             if (issue.getYear() == year) {
                 res.add(issue);
             }
@@ -140,12 +155,23 @@ public class Library {
     }
 
     public int amountOfReaders() {
-        return readers.size();
+        return context.getReaderDAO().getReaders().size();
     }
 
     public int amountOfPeriodicalIssues() {
-        return issues.size();
+        return context.getIssueDAO().getIssues().size();
     }
 
+    public boolean giveIssueToReader(String readerName, String issueName, String author, int year, Genre genre) throws MoreThanMaxAmountOfPeriodicalIssuesException {
+
+        if(!context.getReaderDAO().findReader(readerName)) return false;
+        if(!context.getIssueDAO().findIssue(issueName,author,year,genre)) return false;
+
+        Reader reader = context.getReaderDAO().getReader(readerName);
+
+        return reader.addPeriodicalIssue(context.getIssueDAO().getIssue(issueName,author,year,genre));
+
+
+    }
 
 }
