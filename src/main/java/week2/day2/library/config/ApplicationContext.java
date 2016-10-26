@@ -9,8 +9,8 @@ import week2.day2.library.database.LibraryDB;
  */
 public class ApplicationContext {
 
-    private ReaderDAO readerDAO = new ReaderDAO();
-    private IssueDAO issueDAO = new IssueDAO();
+    private ReaderDAO readerDAO = new ReaderDAO(LibraryDB.getInstance());
+    private IssueDAO issueDAO = new IssueDAO(LibraryDB.getInstance());
     private static ApplicationContext instance;
 
     private ApplicationContext(){}

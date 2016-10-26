@@ -38,9 +38,11 @@ public class Library {
 
     public ArrayList<Reader> getReaders() {
 
-        sortByNameReaders();
-        return context.getReaderDAO().getReaders();
+        ArrayList<Reader> temp = context.getReaderDAO().getReaders();
 
+        sort(temp,new NameReaderComparator());
+
+        return temp;
     }
 
     public ArrayList<PeriodicalIssue> getIssues(String criterionSort) throws IncorrectCriterionSortException {
@@ -64,9 +66,9 @@ public class Library {
         return temp;
     }
 
-    private void sort(ArrayList<PeriodicalIssue> issues, Comparator comparator) {
+    private void sort(ArrayList list, Comparator comparator) {
 
-        issues.sort(comparator);
+        list.sort(comparator);
 
     }
 
@@ -80,10 +82,6 @@ public class Library {
         if (issue == null) return false;
 
         return context.getIssueDAO().addIssue(issue);
-    }
-
-    private void sortByNameReaders() {
-        context.getReaderDAO().getReaders().sort(new NameReaderComparator());
     }
 
     public ArrayList<PeriodicalIssue> getAllIssuesThatHaveReaders() {

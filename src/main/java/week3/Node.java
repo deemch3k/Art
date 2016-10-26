@@ -3,28 +3,28 @@ package week3;
 /**
  * Created by Дмитрий on 23.10.2016.
  */
-public class Node {
+public class Node <T> {
 
     private Node next;
     private Node prev;
-    private Object value;
+    private T value;
 
-    public Node(Node next, Node prev, Object value) {
+    public Node(Node next, Node prev, T value) {
         this.next = next;
         this.prev = prev;
         this.value = value;
     }
 
-    public Node(Object value) {
+    public Node(T value) {
         this.value = value;
     }
 
-    public Node(Node prev, Object value) {
+    public Node(Node prev, T value) {
         this.prev = prev;
         this.value = value;
     }
 
-    public Node getNext() {
+    public Node<T> getNext() {
         return next;
     }
 
@@ -32,7 +32,7 @@ public class Node {
         this.next = next;
     }
 
-    public Node getPrev() {
+    public Node<T> getPrev() {
         return prev;
     }
 
@@ -40,11 +40,11 @@ public class Node {
         this.prev = prev;
     }
 
-    public Object getValue() {
+    public T getValue() {
         return value;
     }
 
-    public void setValue(Object value) {
+    public void setValue(T value) {
         this.value = value;
     }
 }

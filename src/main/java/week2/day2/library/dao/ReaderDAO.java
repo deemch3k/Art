@@ -12,9 +12,10 @@ public class ReaderDAO {
 
     private LibraryDB db;
 
-    public ReaderDAO() {
-        db = LibraryDB.getInstance();
+    public ReaderDAO(LibraryDB db) {
+        this.db = db;
     }
+
 
     public boolean findReader(String name) {
 

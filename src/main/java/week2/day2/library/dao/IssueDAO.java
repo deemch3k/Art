@@ -16,8 +16,8 @@ public class IssueDAO {
 
     private LibraryDB db;
 
-    public IssueDAO() {
-        db = LibraryDB.getInstance();
+    public IssueDAO(LibraryDB db) {
+        this.db = db;
     }
 
     public boolean findIssue(String name, String authorName, int year, Genre genre){

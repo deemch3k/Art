@@ -2,30 +2,31 @@ package week3;
 
 import home.week2.MyList;
 
+import java.util.LinkedList;
+
 /**
  * Created by Дмитрий on 23.10.2016.
  */
-public class MyLinkedList implements MyList {
+public class MyLinkedList<T> implements MyList<T> {
 
     private int size;
-    private Node head;
-    private Node tail;
+    private Node<T> head;
+    private Node<T> tail;
 
     public MyLinkedList() {
     }
 
 
-
     @Override
-    public boolean add(Object o) {
+    public boolean add(T o) {
 
-        if(tail == null){
-            head = tail = new Node(o);
+        if (tail == null) {
+            head = tail = new Node<>(o);
             size++;
             return true;
         }
 
-        tail.setNext(new Node(tail,o));
+        tail.setNext(new Node<>(tail, o));
         tail = tail.getNext();
         size++;
 
@@ -33,40 +34,77 @@ public class MyLinkedList implements MyList {
     }
 
     @Override
-    public boolean add(int index, Object o) {
-        return false;
+    public boolean add(int index, T o) {
+
+        checkIndex(index);
+
+        if (index == size - 1) {
+            add(o);
+        }
+        Node<T> current = new Node<>(o);
+        Node<T> temp = getNode(index - 1);
+        temp.getNext().setPrev(current);
+        current.setPrev(temp);
+        current.setNext(temp.getNext());
+        temp.setNext(current);
+
+        return true;
+
     }
 
     @Override
     public boolean clear() {
+        if (tail == null || head == null) return false;
+        tail = null;
+        head = null;
+        return true;
+    }
+
+    @Override
+    public boolean contains(Object o) {
+
+        for (int i = 0; i < size; i++) {
+
+            if (getNode(i).equals(o)) {
+                return true;
+            }
+
+        }
         return false;
     }
 
     @Override
-    public Object contains(Object o) {
-        return null;
-    }
-
-    @Override
-    public Object get(int index) {
-
+    public T get(int index) {
         checkIndex(index);
 
-        Node iterator = head;
+        Node<T> iterator = head;
 
-        for (int i = 0; i <= index; i++) {
-
-        iterator = iterator.getNext();
-
+        for (int i = 0; i <= size; i++) {
+            iterator = iterator.getNext();
         }
 
         return iterator.getValue();
+    }
+
+    private Node<T> getNode(int index) {
+
+        checkIndex(index);
+
+        Node<T> iterator = head;
+
+        for (int i = 0; i <= index; i++) {
+
+            iterator = iterator.getNext();
+
+        }
+
+        return iterator;
 
     }
 
     private void checkIndex(int index) {
 
-        if(index < 0 || index >= size){
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
 
@@ -74,32 +112,73 @@ public class MyLinkedList implements MyList {
 
     @Override
     public int indexOf(Object o) {
-        return 0;
+
+        for (int i = 0; i < size; i++) {
+
+            if (getNode(i).equals(o)) {
+                return i;
+            }
+
+        }
+        return -1;
+
     }
 
     @Override
-    public boolean isEmpty(Object o) {
+    public boolean isEmpty() {
         return size == 0;
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        return 0;
+
+        for (int i = size; i < 0; i--) {
+
+            if (getNode(i).equals(o)) {
+                return i;
+            }
+
+        }
+        return -1;
     }
 
     @Override
     public boolean remove(int index) {
-        return false;
+
+        checkIndex(index);
+
+        Node<T> temp = getNode(index);
+
+        temp.getPrev().setNext(temp.getNext());
+        temp.getNext().setPrev(temp.getPrev());
+
+        return true;
+
     }
 
     @Override
     public boolean remove(Object o) {
-        return false;
+        if (!contains(o)) {
+            return false;
+        }
+
+        for (int i = 0; i < size; i++) {
+
+            if (getNode(i).equals(o)) {
+                remove(i);
+            }
+        }
+        return true;
     }
 
     @Override
-    public boolean set(int index, Object o) {
-        return false;
+    public boolean set(int index, T o) {
+
+        checkIndex(index);
+
+        remove(index);
+        add(o);
+        return true;
     }
 
     @Override
@@ -109,6 +188,14 @@ public class MyLinkedList implements MyList {
 
     @Override
     public Object[] toArray() {
-        return new Object[0];
+
+        Object[] objects = new Object[size];
+
+        for (int i = 0; i < size; i++) {
+
+            objects[i] = getNode(i).getValue();
+
+        }
+        return objects;
     }
 }
