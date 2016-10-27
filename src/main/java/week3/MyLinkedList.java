@@ -2,8 +2,6 @@ package week3;
 
 import home.week2.MyList;
 
-import java.util.LinkedList;
-
 /**
  * Created by Дмитрий on 23.10.2016.
  */
@@ -198,4 +196,53 @@ public class MyLinkedList<T> implements MyList<T> {
         }
         return objects;
     }
+
+
+     private class Node <T> {
+
+        private Node next;
+        private Node prev;
+        private T value;
+
+        public Node(Node next, Node prev, T value) {
+            this.next = next;
+            this.prev = prev;
+            this.value = value;
+        }
+
+         Node(T value) {
+            this.value = value;
+        }
+
+         Node(Node prev, T value) {
+            this.prev = prev;
+            this.value = value;
+        }
+
+         Node<T> getNext() {
+            return next;
+        }
+
+         void setNext(Node next) {
+            this.next = next;
+        }
+
+         Node<T> getPrev() {
+            return prev;
+        }
+
+         void setPrev(Node prev) {
+            this.prev = prev;
+        }
+
+         T getValue() {
+            return value;
+        }
+
+        public void setValue(T value) {
+            this.value = value;
+        }
+    }
+
+
 }
