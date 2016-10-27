@@ -8,9 +8,9 @@ public interface MyList<T> {
     boolean add(T o);
     boolean add(int index, T o);
     boolean clear();
-    boolean contains(Object o);
+    boolean contains(T o);
     T get(int index);
-    int indexOf(Object o);
+    int indexOf(T o);
     boolean isEmpty();
     int lastIndexOf(Object o);
     boolean remove(int index);

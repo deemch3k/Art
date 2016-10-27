@@ -61,11 +61,11 @@ public class MyLinkedList<T> implements MyList<T> {
     }
 
     @Override
-    public boolean contains(Object o) {
+    public boolean contains(T o) {
 
         for (int i = 0; i < size; i++) {
 
-            if (getNode(i).equals(o)) {
+            if (getNode(i).getValue().equals(o)) {
                 return true;
             }
 
@@ -111,11 +111,11 @@ public class MyLinkedList<T> implements MyList<T> {
     }
 
     @Override
-    public int indexOf(Object o) {
+    public int indexOf(T o) {
 
         for (int i = 0; i < size; i++) {
 
-            if (getNode(i).equals(o)) {
+            if (getNode(i).getValue().equals(o)) {
                 return i;
             }
 
@@ -134,7 +134,7 @@ public class MyLinkedList<T> implements MyList<T> {
 
         for (int i = size; i < 0; i--) {
 
-            if (getNode(i).equals(o)) {
+            if (getNode(i).getValue().equals(o)) {
                 return i;
             }
 
@@ -157,14 +157,14 @@ public class MyLinkedList<T> implements MyList<T> {
     }
 
     @Override
-    public boolean remove(Object o) {
+    public boolean remove(T o) {
         if (!contains(o)) {
             return false;
         }
 
         for (int i = 0; i < size; i++) {
 
-            if (getNode(i).equals(o)) {
+            if (getNode(i).getValue().equals(o)) {
                 remove(i);
             }
         }
@@ -177,7 +177,7 @@ public class MyLinkedList<T> implements MyList<T> {
         checkIndex(index);
 
         remove(index);
-        add(o);
+        add(index, o);
         return true;
     }
 
