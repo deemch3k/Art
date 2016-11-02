@@ -1,25 +1,34 @@
 package week3;
 
+import java.util.LinkedList;
+
 /**
- * Created by Дмитрий on 26.10.2016.
+ * Created by Дмитрий on 30.10.2016.
  */
 public class MyLinkedListTest {
 
     public static void main(String[] args) {
 
-        MyLinkedList myLinkedList = new MyLinkedList();
+        MyLinkedList<String> myLinkedList = new MyLinkedList<>();
 
-        myLinkedList.add(new Node(20));
-        Node o = new Node(25);
-        myLinkedList.add(o);
-        myLinkedList.add(new Node(30));
-        myLinkedList.add(new Node(35));
+        LinkedList<String> linkedList = new LinkedList<>();
 
-        System.out.println(myLinkedList.get(1).getValue());
+        linkedList.add("1");
+        linkedList.add("2");
+        linkedList.add("3");
+        linkedList.add("4");
+        linkedList.add("5");
 
-        o.setValue(128);
+        myLinkedList.add("A");
+        myLinkedList.add("B");
+        myLinkedList.add("C");
+        myLinkedList.add("D");
+        myLinkedList.add("E");
 
-        System.out.println(myLinkedList.get(1).getValue());
+
+        for(String s : myLinkedList){
+            System.out.println(s);
+        }
 
     }
 

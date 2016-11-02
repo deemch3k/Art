@@ -16,6 +16,10 @@ public class Universty {
         grCount = 0;
     }
 
+    private void setGroups(Group[] groups) {
+        this.groups = groups;
+    }
+
     public String getName() {
         return name;
     }
@@ -56,6 +60,19 @@ public class Universty {
 
     public Group[] getGroups() {
         return groups;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        Universty universty = new Universty(name);
+        Group[] groupsClone = new Group[grCount];
+
+        for (int i = 0; i < grCount; i++) {
+            groupsClone[i] = groups[i];
+        }
+
+        universty.setGroups(groupsClone);
+        return universty;
     }
 }
 

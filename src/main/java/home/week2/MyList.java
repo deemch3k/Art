@@ -3,7 +3,7 @@ package home.week2;
 /**
  * Created by Дмитрий on 19.10.2016.
  */
-public interface MyList<T> {
+public interface MyList<T> extends Iterable<T> {
 
     boolean add(T o);
     boolean add(int index, T o);
@@ -12,7 +12,7 @@ public interface MyList<T> {
     T get(int index);
     int indexOf(T o);
     boolean isEmpty();
-    int lastIndexOf(Object o);
+    int lastIndexOf(T o);
     boolean remove(int index);
     boolean remove(T o);
     boolean set(int index, T o);

@@ -2,6 +2,8 @@ package week3;
 
 import home.week2.MyList;
 
+import java.util.Iterator;
+
 /**
  * Created by Дмитрий on 23.10.2016.
  */
@@ -77,7 +79,7 @@ public class MyLinkedList<T> implements MyList<T> {
 
         Node<T> iterator = head;
 
-        for (int i = 0; i <= size; i++) {
+        for (int i = 0; i < index; i++) {
             iterator = iterator.getNext();
         }
 
@@ -128,7 +130,7 @@ public class MyLinkedList<T> implements MyList<T> {
     }
 
     @Override
-    public int lastIndexOf(Object o) {
+    public int lastIndexOf(T o) {
 
         for (int i = size; i < 0; i--) {
 
@@ -197,24 +199,31 @@ public class MyLinkedList<T> implements MyList<T> {
         return objects;
     }
 
+    @Override
+    public Iterator<T> iterator() {
+        return new MyLinkedListIterator() ;
+    }
 
-     private class Node <T> {
 
-        private Node next;
-        private Node prev;
+    private static class Node <T> {
+
+        private Node<T> next;
+        private Node<T> prev;
         private T value;
 
-        public Node(Node next, Node prev, T value) {
+        public Node(Node<T> next, Node<T> prev, T value) {
             this.next = next;
             this.prev = prev;
             this.value = value;
         }
 
+        public Node(){}
+
          Node(T value) {
             this.value = value;
         }
 
-         Node(Node prev, T value) {
+         Node(Node<T> prev, T value) {
             this.prev = prev;
             this.value = value;
         }
@@ -245,4 +254,25 @@ public class MyLinkedList<T> implements MyList<T> {
     }
 
 
+    private class MyLinkedListIterator implements Iterator<T> {
+
+        private Node<T> iterator;
+
+        public MyLinkedListIterator() {
+            iterator = new Node<>();
+            iterator.next = head;
+        }
+
+        @Override
+        public boolean hasNext() {
+
+            return iterator.next != null;
+        }
+
+        @Override
+        public T next() {
+            iterator = iterator.next;
+            return iterator.value;
+        }
+    }
 }
