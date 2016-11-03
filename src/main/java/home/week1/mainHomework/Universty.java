@@ -71,6 +71,8 @@ public class Universty {
             groupsClone[i] = groups[i];
         }
 
+
+
         universty.setGroups(groupsClone);
         return universty;
     }

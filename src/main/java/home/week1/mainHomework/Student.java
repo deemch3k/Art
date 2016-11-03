@@ -77,4 +77,9 @@ public class Student implements Comparable<Student>{
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
     }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return new Student(name,surname,awg);
+    }
 }

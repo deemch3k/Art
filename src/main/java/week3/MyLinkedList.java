@@ -2,13 +2,14 @@ package week3;
 
 import home.week2.MyList;
 import home.week4.MyDeque;
+import home.week4.exceptions.ListIsEmptyException;
 
 import java.util.Iterator;
 
 /**
  * Created by Дмитрий on 23.10.2016.
  */
-public class MyLinkedList<T> implements MyList<T>,MyDeque<T> {
+public class MyLinkedList<T> implements MyList<T>, MyDeque<T> {
 
     private int size;
     private Node<T> head;
@@ -201,37 +202,39 @@ public class MyLinkedList<T> implements MyList<T>,MyDeque<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new MyLinkedListIterator() ;
+        return new MyLinkedListIterator();
     }
 
     @Override
-    public T element() {
+    public T element() throws ListIsEmptyException {
+
+        if(checkSize()) throw new ListIsEmptyException();
+
         return get(0);
     }
 
     @Override
     public boolean offer(T o) {
-        add(o);
-        return true;
+        return add(o);
     }
 
     @Override
-    public T peek() {
-        if(checkSize()){
+    public T peek() throws ListIsEmptyException {
+        if (checkSize()) {
             return null;
         } else {
             return element();
         }
     }
 
-    private boolean checkSize(){
-        if(size == 0) return true;
+    private boolean checkSize() {
+        if (size == 0) return true;
         return false;
     }
 
     @Override
     public T poll() {
-        if(checkSize()){
+        if (checkSize()) {
             return null;
         } else {
             return remove();
@@ -240,14 +243,18 @@ public class MyLinkedList<T> implements MyList<T>,MyDeque<T> {
 
     @Override
     public T remove() {
-        T temp = get(0);
-        remove(0);
-        return temp;
+        if (checkSize()) {
+            return null;
+        } else {
+            T temp = get(0);
+            remove(0);
+            return temp;
+        }
     }
 
     @Override
     public boolean addFirst(T t) {
-       return add(0,t);
+        return add(0, t);
     }
 
     @Override
@@ -277,7 +284,7 @@ public class MyLinkedList<T> implements MyList<T>,MyDeque<T> {
 
     @Override
     public T peekFirst() {
-        if(checkSize()){
+        if (checkSize()) {
             return null;
         } else {
             return getFirst();
@@ -286,7 +293,7 @@ public class MyLinkedList<T> implements MyList<T>,MyDeque<T> {
 
     @Override
     public T peekLast() {
-        if(checkSize()){
+        if (checkSize()) {
             return null;
         } else {
             return getLast();
@@ -295,16 +302,16 @@ public class MyLinkedList<T> implements MyList<T>,MyDeque<T> {
 
     @Override
     public T pollFirst() {
-        if(checkSize()){
+        if (checkSize()) {
             return null;
         } else {
-           return removeFirst();
+            return removeFirst();
         }
     }
 
     @Override
     public T pollLast() {
-        if(checkSize()){
+        if (checkSize()) {
             return null;
         } else {
             return removeLast();
@@ -331,7 +338,7 @@ public class MyLinkedList<T> implements MyList<T>,MyDeque<T> {
     }
 
 
-    private static class Node <T> {
+    private static class Node<T> {
 
         private Node<T> next;
         private Node<T> prev;
@@ -343,34 +350,35 @@ public class MyLinkedList<T> implements MyList<T>,MyDeque<T> {
             this.value = value;
         }
 
-        public Node(){}
+        public Node() {
+        }
 
-         Node(T value) {
+        Node(T value) {
             this.value = value;
         }
 
-         Node(Node<T> prev, T value) {
+        Node(Node<T> prev, T value) {
             this.prev = prev;
             this.value = value;
         }
 
-         Node<T> getNext() {
+        Node<T> getNext() {
             return next;
         }
 
-         void setNext(Node next) {
+        void setNext(Node next) {
             this.next = next;
         }
 
-         Node<T> getPrev() {
+        Node<T> getPrev() {
             return prev;
         }
 
-         void setPrev(Node prev) {
+        void setPrev(Node prev) {
             this.prev = prev;
         }
 
-         T getValue() {
+        T getValue() {
             return value;
         }
 
