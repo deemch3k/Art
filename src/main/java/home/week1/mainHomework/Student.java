@@ -79,7 +79,7 @@ public class Student implements Comparable<Student>{
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    protected Student clone() throws CloneNotSupportedException {
         return new Student(name,surname,awg);
     }
 }

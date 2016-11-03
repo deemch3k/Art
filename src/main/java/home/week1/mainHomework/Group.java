@@ -18,6 +18,11 @@ public class Group {
         students = new Student[10];
     }
 
+    private Group(String name, Student[] students){
+        this.name = name;
+        this.students = students;
+    }
+
     public boolean addStudent(Student student) {
         if (student == null || stCount == students.length) return false;
 
@@ -122,8 +127,17 @@ public class Group {
         return name != null ? name.hashCode() : 0;
     }
 
-    public Student[] getStudents() {
+    private Student[] getStudents() {
         return students;
+    }
+
+    @Override
+    protected Group clone() throws CloneNotSupportedException {
+        Student[] studentsClone = new Student[stCount];
+        for (int i = 0; i < stCount; i++) {
+            studentsClone[i] = students[i].clone();
+        }
+        return new Group(name,studentsClone);
     }
 }
 

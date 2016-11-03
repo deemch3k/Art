@@ -206,9 +206,9 @@ public class MyLinkedList<T> implements MyList<T>, MyDeque<T> {
     }
 
     @Override
-    public T element() throws ListIsEmptyException {
+    public T element() {
 
-        if(checkSize()) throw new ListIsEmptyException();
+        if(isEmpty()) throw new ListIsEmptyException();
 
         return get(0);
     }
@@ -219,22 +219,17 @@ public class MyLinkedList<T> implements MyList<T>, MyDeque<T> {
     }
 
     @Override
-    public T peek() throws ListIsEmptyException {
-        if (checkSize()) {
+    public T peek() {
+        if (isEmpty()) {
             return null;
         } else {
             return element();
         }
     }
 
-    private boolean checkSize() {
-        if (size == 0) return true;
-        return false;
-    }
-
     @Override
     public T poll() {
-        if (checkSize()) {
+        if (isEmpty()) {
             return null;
         } else {
             return remove();
@@ -243,7 +238,7 @@ public class MyLinkedList<T> implements MyList<T>, MyDeque<T> {
 
     @Override
     public T remove() {
-        if (checkSize()) {
+        if (isEmpty()) {
             return null;
         } else {
             T temp = get(0);
@@ -284,7 +279,7 @@ public class MyLinkedList<T> implements MyList<T>, MyDeque<T> {
 
     @Override
     public T peekFirst() {
-        if (checkSize()) {
+        if (isEmpty()) {
             return null;
         } else {
             return getFirst();
@@ -293,7 +288,7 @@ public class MyLinkedList<T> implements MyList<T>, MyDeque<T> {
 
     @Override
     public T peekLast() {
-        if (checkSize()) {
+        if (isEmpty()) {
             return null;
         } else {
             return getLast();
@@ -302,7 +297,7 @@ public class MyLinkedList<T> implements MyList<T>, MyDeque<T> {
 
     @Override
     public T pollFirst() {
-        if (checkSize()) {
+        if (isEmpty()) {
             return null;
         } else {
             return removeFirst();
@@ -311,7 +306,7 @@ public class MyLinkedList<T> implements MyList<T>, MyDeque<T> {
 
     @Override
     public T pollLast() {
-        if (checkSize()) {
+        if (isEmpty()) {
             return null;
         } else {
             return removeLast();

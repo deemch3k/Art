@@ -4,13 +4,13 @@ package home.week1.mainHomework;
  * Created by Дмитрий on 11.10.2016.
  */
 
-public class Universty {
+public class University {
 
     private String name;
     private Group[] groups;
     private int grCount;
 
-    public Universty(String name) {
+    public University(String name) {
         this.name = name;
         groups = new Group[10];
         grCount = 0;
@@ -64,17 +64,15 @@ public class Universty {
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-        Universty universty = new Universty(name);
+        University university = new University(name);
         Group[] groupsClone = new Group[grCount];
 
         for (int i = 0; i < grCount; i++) {
-            groupsClone[i] = groups[i];
+            groupsClone[i] = groups[i].clone();
         }
 
-
-
-        universty.setGroups(groupsClone);
-        return universty;
+        university.setGroups(groupsClone);
+        return university;
     }
 }
 
