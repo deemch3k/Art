@@ -6,23 +6,23 @@ import org.junit.Test;
 /**
  * Created by Дмитрий on 02.11.2016.
  */
-public class UniverstyTest {
+public class UniversityTest {
 
     @Test
     public void cloneTest() throws Exception {
 
-        University universty = new University("University");
+        University university1 = new University("University");
         Group group = new Group("Group");
 
         group.addStudent(new Student("Dima","Surname",4.22));
         group.addStudent(new Student("Anton","Surname",4.42));
         group.addStudent(new Student("Vlad","Surname",4.12));
 
-        universty.addGroup(group);
+        university1.addGroup(group);
 
-        University universty1 = (University) universty.clone();
+        University university = (University) university1.clone();
 
-        Assert.assertFalse(universty.getGroups() == universty1.getGroups());
+        Assert.assertFalse(university1.getGroups() == university.getGroups());
 
     }
 }
