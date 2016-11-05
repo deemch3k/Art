@@ -4,7 +4,7 @@ package home.week1.mainHomework;
  * Created by Дмитрий on 11.10.2016.
  */
 
-public class University {
+    public class University implements Cloneable{
 
     private String name;
     private Group[] groups;

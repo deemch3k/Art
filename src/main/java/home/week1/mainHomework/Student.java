@@ -3,7 +3,7 @@ package home.week1.mainHomework;
 /**
  * Created by Дмитрий on 11.10.2016.
  */
-public class Student implements Comparable<Student>{
+public class Student implements Comparable<Student>, Cloneable{
 
     private String name;
     private String surname;
@@ -80,6 +80,6 @@ public class Student implements Comparable<Student>{
 
     @Override
     protected Student clone() throws CloneNotSupportedException {
-        return new Student(name,surname,awg);
+        return (Student) super.clone();
     }
 }

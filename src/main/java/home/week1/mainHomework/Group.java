@@ -6,7 +6,7 @@ import java.util.Arrays;
  * Created by Дмитрий on 11.10.2016.
  */
 
-public class Group {
+public class Group implements Cloneable{
 
     private String name;
     private Student[] students;
