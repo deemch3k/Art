@@ -4,6 +4,8 @@ import week5.day2.io.console.exceptions.DirectoryNotFoundException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Scanner;
 
 /**
@@ -15,7 +17,7 @@ public class Console {
     private static File file = new File(LOCATION);
     private static Scanner sc = new Scanner(System.in);
 
-    public static void main(String[] args) throws DirectoryNotFoundException {
+    public static void main(String[] args) throws DirectoryNotFoundException, IOException {
 
         while (true) {
             System.out.println(LOCATION);
@@ -42,6 +44,12 @@ public class Console {
                 case "help":
                     help();
                     break;
+                case "pwd" :
+                    System.out.println(LOCATION);
+                    break;
+                case "rm" :
+                    remove();
+                    break;
                 default:
                     System.out.println("Неизвестная команда");
             }
@@ -60,11 +68,13 @@ public class Console {
 
     }
 
-    private static void md() throws DirectoryNotFoundException {
+    private static File md() throws DirectoryNotFoundException {
         System.out.println("Введите название папки");
         String dir = sc.nextLine();
         checkIsDirectory();
-        new File(LOCATION + "\\" + dir).mkdir();
+        File file = new File(LOCATION + "\\" + dir);
+        file.mkdir();
+        return file;
     }
 
     private static void ls() {
@@ -112,6 +122,10 @@ public class Console {
         for (int i = 0; i < 50; i++) {
             System.out.println();
         }
+    }
+
+    private static void remove(){
+        file.delete();
     }
 
     private static boolean checkFiles(String path) {
