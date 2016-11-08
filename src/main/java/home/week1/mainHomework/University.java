@@ -4,7 +4,7 @@ package home.week1.mainHomework;
  * Created by Дмитрий on 11.10.2016.
  */
 
-    public class University implements Cloneable{
+public class University implements Cloneable {
 
     private String name;
     private Group[] groups;
@@ -28,13 +28,13 @@ package home.week1.mainHomework;
         this.name = name;
     }
 
-    public boolean addGroup(Group group){
-        if(group == null || grCount == groups.length){
+    public boolean addGroup(Group group) {
+        if (group == null || grCount == groups.length) {
             return false;
         }
 
         for (int i = 0; i < grCount; i++) {
-            if(groups[i].equals(group)){
+            if (groups[i].equals(group)) {
                 return false;
             }
         }
@@ -43,7 +43,8 @@ package home.week1.mainHomework;
 
         return true;
     }
-    public boolean deleteGroup(String name){
+
+    public boolean deleteGroup(String name) {
         int groupIndex = 0;
         if (groups.length == 0 || name == null) return false;
 
@@ -64,7 +65,7 @@ package home.week1.mainHomework;
 
     @Override
     protected Object clone() throws CloneNotSupportedException {
-        University university = new University(name);
+        University university = (University) super.clone();
         Group[] groupsClone = new Group[grCount];
 
         for (int i = 0; i < grCount; i++) {
