@@ -22,18 +22,19 @@ public class Console {
         while (true) {
             System.out.println(LOCATION);
             String cmd = sc.nextLine();
-            switch (cmd) {
+            String[] cmds = parse(cmd);
+            switch (cmds[0]) {
                 case "ls":
                     ls();
                     break;
                 case "cd":
-                    cd();
+                    cd(cmds[1]);
                     break;
                 case "exit":
                     exit();
                     break;
                 case "md":
-                    md();
+                    md(cmds[1]);
                     break;
                 case "dir":
                     dir(LOCATION);
@@ -44,16 +45,25 @@ public class Console {
                 case "help":
                     help();
                     break;
-                case "pwd" :
+                case "pwd":
                     System.out.println(LOCATION);
                     break;
-                case "rm" :
-                    remove();
+                case "rm":
+                    remove(new File(LOCATION));
                     break;
                 default:
                     System.out.println("Неизвестная команда");
             }
         }
+    }
+
+    private static String[] parse(String cmd) {
+        cmd.trim();
+        String[] cmds = cmd.split(" ");
+        if (cmds.length == 1) {
+            return new String[]{cmds[0], ""};
+        }
+        return cmds;
     }
 
     private static void help() {
@@ -64,16 +74,19 @@ public class Console {
                 "4. md - Создание папки\n" +
                 "5. dir - Выводит на экран все файлы папок и подпапок\n" +
                 "6. cls - Очищает экран\n" +
-                "7. help - Выводит на экран список команд");
+                "7. help - Выводит на экран список команд\n" +
+                "8. rm - удаляет текущую папку или файл");
 
     }
 
-    private static File md() throws DirectoryNotFoundException {
-        System.out.println("Введите название папки");
-        String dir = sc.nextLine();
-        checkIsDirectory();
-        File file = new File(LOCATION + "\\" + dir);
-        file.mkdir();
+    private static File md(String dir) throws DirectoryNotFoundException {
+        checkIsDirectory(file);
+        if (dir.equals("")) {
+            System.out.println("Неверный ввод названия папки");
+        } else {
+            File file = new File(LOCATION + "\\" + dir);
+            file.mkdir();
+        }
         return file;
     }
 
@@ -84,13 +97,11 @@ public class Console {
         }
     }
 
-    private static void cd() throws DirectoryNotFoundException {
-        System.out.println("Введите название папки");
-        String path = sc.nextLine();
-        checkIsDirectory();
-        if (checkFiles(path)) {
+    private static void cd(String path) throws DirectoryNotFoundException {
+        checkIsDirectory(file);
+        if (checkFiles(path) !=  null) {
             LOCATION = LOCATION + path;
-        } else if (path.equals("D:")) {
+        } else if (path.equals("")) {
             LOCATION = "D:\\";
         } else {
             System.out.println("Такой папки нету");
@@ -103,7 +114,7 @@ public class Console {
     }
 
     private static void dir(String path) throws DirectoryNotFoundException {
-        checkIsDirectory();
+        checkIsDirectory(file);
         String tag = "-";
         File fileDir = new File(path);
         File[] files = fileDir.listFiles();
@@ -118,34 +129,42 @@ public class Console {
             }
     }
 
-    public static void clear(){
+    public static void clear() {
         for (int i = 0; i < 50; i++) {
             System.out.println();
         }
     }
 
-    private static void remove(){
-        file.delete();
+    private static void remove(File file) throws DirectoryNotFoundException {
+        File[] files = file.listFiles();
+        if (files != null)
+            for (File f : file.listFiles()) {
+                if (f.isFile()) {
+                    f.delete();
+                } else if (f.isDirectory()) {
+                    remove(f);
+                }
+            }
     }
 
-    private static boolean checkFiles(String path) {
+    private static File checkFiles(String path) {
         File[] files = file.listFiles();
         for (File file1 : files) {
             if (file1.getName().equals(path)) {
-                return true;
+                return file1;
             }
         }
-        return false;
+        return null;
     }
 
-    private static boolean checkIsDirectory() throws DirectoryNotFoundException {
+    private static boolean checkIsDirectory(File file) throws DirectoryNotFoundException {
         if (!file.isDirectory()) {
             throw new DirectoryNotFoundException();
         }
         return true;
     }
 
-    private static boolean checkIsFile() throws FileNotFoundException {
+    private static boolean checkIsFile(File file) throws FileNotFoundException {
         if (!file.isFile()) {
             throw new FileNotFoundException();
         }
