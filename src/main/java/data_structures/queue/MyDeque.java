@@ -1,11 +1,9 @@
-package home.week4;
-
-import java.util.Queue;
+package data_structures.queue;
 
 /**
  * Created by Дмитрий on 02.11.2016.
  */
-public interface MyDeque<E> extends MyQueue<E>{
+public interface MyDeque<E> extends MyQueue<E> {
 
     boolean addFirst(E e);
     boolean addLast(E e);

@@ -1,7 +1,6 @@
-package week3;
+package data_structures.list;
 
-import home.week2.MyList;
-import home.week4.MyDeque;
+import data_structures.queue.MyDeque;
 import home.week4.exceptions.ListIsEmptyException;
 
 import java.util.Iterator;
@@ -72,6 +71,11 @@ public class MyLinkedList<T> implements MyList<T>, MyDeque<T> {
 
         }
         return false;
+    }
+
+    @Override
+    public <T1> T1[] toArray(T1[] a) {
+        return null;
     }
 
     @Override

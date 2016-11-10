@@ -1,11 +1,10 @@
 package week3;
 
+import data_structures.list.MyLinkedList;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by Дмитрий on 30.10.2016.

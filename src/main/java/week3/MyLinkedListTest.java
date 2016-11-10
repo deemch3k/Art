@@ -1,5 +1,7 @@
 package week3;
 
+import data_structures.list.MyLinkedList;
+
 import java.util.LinkedList;
 
 /**
