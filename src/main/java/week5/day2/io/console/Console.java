@@ -1,11 +1,15 @@
 package week5.day2.io.console;
 
+import com.sun.deploy.util.SystemUtils;
 import week5.day2.io.console.exceptions.DirectoryNotFoundException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
+import java.nio.file.spi.FileSystemProvider;
 import java.util.Scanner;
 
 /**
@@ -49,7 +53,7 @@ public class Console {
                     System.out.println(LOCATION);
                     break;
                 case "rm":
-                    remove(new File(LOCATION));
+                    deleteRecursively(new File(LOCATION));
                     break;
                 default:
                     System.out.println("Неизвестная команда");
@@ -135,15 +139,24 @@ public class Console {
         }
     }
 
-    private static void remove(File file) throws DirectoryNotFoundException {
-        File[] files = file.listFiles();
-        if (files != null)
-            for (File f : file.listFiles()) {
-                if (f.isFile()) {
-                    f.delete();
-                } else if (f.isDirectory()) {
-                    remove(f);
+        public static boolean deleteRecursively(File root) {
+            if(root != null && root.exists()) {
+                if(root.isDirectory()) {
+                    File[] children = root.listFiles();
+                    if(children != null) {
+                        File[] var2 = children;
+                        int var3 = children.length;
+
+                        for(int var4 = 0; var4 < var3; ++var4) {
+                            File child = var2[var4];
+                            deleteRecursively(child);
+                        }
+                    }
                 }
+
+                return root.delete();
+            } else {
+                return false;
             }
     }
 
